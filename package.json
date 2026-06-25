@@ -1,0 +1,53 @@
+{
+  "name": "miaoqie",
+  "version": "0.1.0",
+  "description": "秒切是一款本地会话管理工具，用于管理您本人合法注册、付费或免费开通的账号",
+  "main": "electron/main.js",
+  "author": "云卿",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron . --enable-logging",
+    "icons": "bash scripts/generate-icons.sh",
+    "clean:release": "node -e \"require('fs').rmSync('release',{recursive:true,force:true})\"",
+    "pack": "npm run clean:release && electron-builder --dir",
+    "dist": "npm run clean:release && electron-builder",
+    "dist:win": "npm run clean:release && electron-builder --win nsis zip --x64"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^35.0.0",
+    "electron-builder": "^25.1.8"
+  },
+  "dependencies": {
+    "electron-store": "^8.2.0",
+    "sql.js": "^1.14.1"
+  },
+  "build": {
+    "appId": "com.miaoqie.traeswitch",
+    "productName": "秒切",
+    "directories": {
+      "output": "release",
+      "buildResources": "build"
+    },
+    "files": [
+      "electron/**/*",
+      "src/**/*",
+      "build/icon.png",
+      "build/icon.icns",
+      "build/icon.ico",
+      "package.json"
+    ],
+    "artifactName": "${productName}-${version}-${os}-${arch}.${ext}",
+    "win": {
+      "icon": "build/icon.ico",
+      "target": [
+        "nsis",
+        "zip"
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
+  }
+}
